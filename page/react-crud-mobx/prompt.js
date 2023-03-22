@@ -1,7 +1,7 @@
 const utils = require('../utils');
 
 module.exports = {
-  description: 'generate a controller', // 描述这个generate的作用
+  description: '生成一个带增删改查功能的 react 状态管理为 mobx 的代码文件夹', // 描述这个generate的作用
   prompts: [
     {
       type: 'input', // 问题的类型
