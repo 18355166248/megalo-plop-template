@@ -1,5 +1,7 @@
 const utils = require('../utils');
 
+const rootPath = process.cwd();
+
 module.exports = {
   description: '生成一个带增删改查功能的 react 状态管理为 mobx 的代码文件夹', // 描述这个generate的作用
   prompts: [
@@ -31,8 +33,8 @@ module.exports = {
     const actions = [
       {
         type: 'add', // 操作类型 添加文件
-        path: `src/pages${path}${`/${LastName}`}/index${firstUpperCase}.tsx`, // 添加的文件的路径
-        templateFile: 'src/plop-template/page/template/index.hbs',
+        path: `${rootPath}/src/pages${path}${`/${LastName}`}/index${firstUpperCase}.tsx`, // 添加的文件的路径
+        templateFile: 'page/react-crud-mobx/template/index.hbs',
         data: {
           name: LastName,
           firstUpperName: firstUpperCase,
@@ -41,8 +43,8 @@ module.exports = {
       },
       {
         type: 'add', // 操作类型 添加文件
-        path: `src/pages${path}${`/${LastName}`}/Table${firstUpperCase}.tsx`, // 添加的文件的路径
-        templateFile: 'src/plop-template/page/template/Table.hbs',
+        path: `${rootPath}/src/pages${path}${`/${LastName}`}/Table${firstUpperCase}.tsx`, // 添加的文件的路径
+        templateFile: 'page/react-crud-mobx/template/Table.hbs',
         data: {
           name: LastName,
           firstUpperName: firstUpperCase,
@@ -51,8 +53,8 @@ module.exports = {
       },
       {
         type: 'add', // 操作类型 添加文件
-        path: `src/pages${path}${`/${LastName}`}/${LastName}.context.ts`, // 添加的文件的路径
-        templateFile: 'src/plop-template/page/template/index.context.hbs',
+        path: `${rootPath}/src/pages${path}${`/${LastName}`}/${LastName}.context.ts`, // 添加的文件的路径
+        templateFile: 'page/react-crud-mobx/template/index.context.hbs',
         data: {
           name: LastName,
           firstUpperName: firstUpperCase,
@@ -61,8 +63,8 @@ module.exports = {
       },
       {
         type: 'add', // 操作类型 添加文件
-        path: `src/pages${path}${`/${LastName}`}/${LastName}.models.ts`, // 添加的文件的路径
-        templateFile: 'src/plop-template/page/template/index.models.hbs',
+        path: `${rootPath}/src/pages${path}${`/${LastName}`}/${LastName}.models.ts`, // 添加的文件的路径
+        templateFile: 'page/react-crud-mobx/template/index.models.hbs',
         data: {
           name: LastName,
           firstUpperName: firstUpperCase,
@@ -71,8 +73,8 @@ module.exports = {
       },
       {
         type: 'add', // 操作类型 添加文件
-        path: `src/pages${path}${`/${LastName}`}/FilterForm${firstUpperCase}.tsx`, // 添加的文件的路径
-        templateFile: 'src/plop-template/page/template/FilterForm.hbs',
+        path: `${rootPath}/src/pages${path}${`/${LastName}`}/FilterForm${firstUpperCase}.tsx`, // 添加的文件的路径
+        templateFile: 'page/react-crud-mobx/template/FilterForm.hbs',
         data: {
           name: LastName,
           firstUpperName: firstUpperCase,
@@ -81,8 +83,8 @@ module.exports = {
       },
       {
         type: 'add', // 操作类型 添加文件
-        path: `src/pages${path}${`/${LastName}`}/ModalDialog${firstUpperCase}.tsx`, // 添加的文件的路径
-        templateFile: 'src/plop-template/page/template/ModalDialog.hbs',
+        path: `${rootPath}/src/pages${path}${`/${LastName}`}/ModalDialog${firstUpperCase}.tsx`, // 添加的文件的路径
+        templateFile: 'page/react-crud-mobx/template/ModalDialog.hbs',
         data: {
           name: LastName,
           firstUpperName: firstUpperCase,

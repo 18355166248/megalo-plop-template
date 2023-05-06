@@ -1,7 +1,8 @@
 const utils = require('../utils');
 
 function getPath(pathStr) {
-  return `../src/pages${pathStr}`;
+  const rootPath = process.cwd();
+  return `${rootPath}/src/pages${pathStr}`;
 }
 
 module.exports = {
