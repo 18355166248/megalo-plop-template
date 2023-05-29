@@ -1,5 +1,8 @@
-import { queryByPage } from '@/services/promotionConfig';
 import { makeAutoObservable } from 'mobx';
+
+function query(params: any) {
+  return Promise.resolve();
+}
 
 interface Pagination {
   current: number;
@@ -66,7 +69,7 @@ class {{firstUpperName}}Models implements {{firstUpperName}}Interface {
   // 获取列表
   getList = () => {
     this.list.pending = true;
-    queryByPage({
+    query({
       ...this.filterParams,
       pageSize: this.pagination.pageSize,
       pageNum: this.pagination.current,
