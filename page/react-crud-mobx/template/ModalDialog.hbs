@@ -36,8 +36,8 @@ const ModalDialog: FC<Props> = () => {
   }, []);
 
   React.useEffect(() => {
-    form.setFieldsValue(modalOption.initialValues);
-  }, [modalShow]);
+    visible && form.setFieldsValue(modalOption.initialValues);
+  }, [visible, modalOption.initialValues]);
 
   function submitHandle(formData: any) {
     setLoading(true);
@@ -62,8 +62,18 @@ const ModalDialog: FC<Props> = () => {
   }
 
   return (
-    <Modal title={modalOption.title} open={visible} footer={null}>
-      <Form form={form} onFinish={submitHandle} className="mt-5">
+    <Modal
+      title={modalOption.title}
+      open={visible}
+      footer={null}
+      onCancel={onCancel}
+    >
+      <Form
+        form={form}
+        onFinish={submitHandle}
+        className="mt-5"
+        labelCol={{ flex: "0 0 100px" }}
+      >
         <Form.Item
           label="demo"
           name="demo"
