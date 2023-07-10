@@ -2,11 +2,12 @@ import React from 'react';
 import { Button, Table } from 'antd';
 import { ActionList } from '@xmly/mi-design';
 import { useIndexContext } from './{{name}}.context';
+import { ColumnsType } from 'antd/lib/table';
 
 const TableLayout = () => {
   const { dataSource, pagination, setState } = useIndexContext();
 
-  const columns = [
+  const columns: ColumnsType<any> = [
     {
       title: '表头1',
       dataIndex: 'cell1',
