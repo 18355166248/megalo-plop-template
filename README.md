@@ -15,3 +15,13 @@ react 增删改查 使用 官方的 hook 实现状态管理
 
 react 增删改查 使用 mobx + mobx-react-lite 实现状态管理
 所以需要安装对应的依赖
+
+## package.json
+
+添加命令
+
+```js
+"script": {
+  "plop": "plop --plopfile ./plop-template/plopfile.js",
+}
+```
