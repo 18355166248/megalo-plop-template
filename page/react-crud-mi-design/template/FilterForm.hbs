@@ -1,0 +1,71 @@
+import { Form, Input, Select } from "antd";
+import type { FormInstance } from "antd";
+import { useRef } from "react";
+import { ORDER_STATUS } from './constant{{firstUpperName}}';
+import { useIndexContext } from './{{name}}.context';
+import { FilterFormLayout } from "@xmly/mi-design";
+
+const FilterForm = () => {
+  const [form] = Form.useForm();
+  const formRef = useRef<{ form: FormInstance }>(null);
+
+  const { setState, pagination } = useIndexContext();
+
+  function onFinish(values: any) {
+    setState({
+      filterForm: { ...values },
+      pagination: {
+        ...pagination,
+        current: 1,
+      },
+    });
+  }
+
+  function onRest() {
+    form.resetFields();
+  }
+
+  return (
+    <div className="mx-6">
+      <FilterFormLayout
+        onOk={onFinish}
+        onReset={onRest}
+        labelWidth={120}
+        ref={formRef}
+      >
+        <Form.Item
+          label="输入框"
+          name="input"
+          rules={[
+            {
+              required: true,
+              message: "请输入",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="下拉框"
+          name="select"
+          rules={[
+            {
+              required: true,
+              message: "请选择",
+            },
+          ]}
+        >
+          <Select allowClear mode="multiple" maxTagCount="responsive">
+            {Object.values(ORDER_STATUS).map((reson) => (
+              <Select.Option value={reson.value} key={reson.value}>
+                {reson.text}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+      </FilterFormLayout>
+    </div>
+  );
+};
+
+export default FilterForm;
