@@ -9,7 +9,7 @@ const FilterForm = () => {
   const [form] = Form.useForm();
   const formRef = useRef<{ form: FormInstance }>(null);
 
-  const { setState, pagination } = useIndexContext();
+  const { setState, pagination, reset } = useIndexContext();
 
   function onFinish(values: any) {
     setState({
@@ -22,7 +22,7 @@ const FilterForm = () => {
   }
 
   function onRest() {
-    form.resetFields();
+    reset();
   }
 
   return (

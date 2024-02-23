@@ -6,7 +6,7 @@ import { useIndexContext } from './{{name}}.context';
 const FilterForm = () => {
   const [form] = Form.useForm();
 
-  const { setState, pagination } = useIndexContext();
+  const { setState, pagination, reset } = useIndexContext();
 
   useEffect(() => {
     form.setFieldsValue({
@@ -25,7 +25,7 @@ const FilterForm = () => {
   }
 
   function onRest() {
-    form.resetFields();
+    reset();
   }
 
   return (
