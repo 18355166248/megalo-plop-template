@@ -1,0 +1,75 @@
+import { Form, Input, Select } from "antd";
+import type { FormInstance } from "antd";
+import { useRef } from "react";
+import { ORDER_STATUS } from "./constant{{firstUpperName}}";
+import { FilterFormLayout } from "@xmly/mi-design";
+import { use{{firstUpperName}}Store } from "./{{name}}.store";
+import { useShallow } from "zustand/react/shallow";
+
+const FilterForm = () => {
+  const formRef = useRef<{ form: FormInstance }>(null);
+
+  const { setState, reset } = use{{firstUpperName}}Store(
+    useShallow((state) => ({
+      setState: state.setState,
+      reset: state.reset,
+    }))
+  );
+  function onFinish(values: any) {
+    setState((state) => {
+      state.filterForm = {
+        ...values,
+        select: values.select ? values.select.join() : "",
+      };
+      state.pagination.current = 1;
+    });
+  }
+
+  function onRest() {
+    reset();
+  }
+
+  return (
+    <div className="mx-6">
+      <FilterFormLayout
+        onOk={onFinish}
+        onReset={onRest}
+        labelWidth={120}
+        ref={formRef}
+      >
+        <Form.Item
+          label="输入框"
+          name="input"
+          rules={[
+            {
+              required: true,
+              message: "请输入",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="下拉框"
+          name="select"
+          rules={[
+            {
+              required: true,
+              message: "请选择",
+            },
+          ]}
+        >
+          <Select allowClear mode="multiple" maxTagCount="responsive">
+            {Object.values(ORDER_STATUS).map((reson) => (
+              <Select.Option value={reson.value} key={reson.value}>
+                {reson.text}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+      </FilterFormLayout>
+    </div>
+  );
+};
+
+export default FilterForm;

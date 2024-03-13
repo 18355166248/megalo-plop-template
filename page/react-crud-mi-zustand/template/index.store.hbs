@@ -1,0 +1,120 @@
+import { query } from "@/services/query";
+import createSelectors from "@/utils/selectors";
+import { notification } from "antd";
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
+
+type State = {
+  filterForm: Record<string, any>;
+  modalVisible: boolean;
+  modalType: string;
+  selectedRowKeys: string[];
+  modalData: Record<string, any>;
+  dataSource: {
+    success: boolean;
+    error: boolean;
+    done: boolean;
+    data: any[];
+  };
+  pagination: {
+    current: number;
+    pageSize: number;
+    total: number;
+  };
+};
+
+type Action = {
+  onCreate(): void;
+  reset(): void;
+  setState: (cb: (state: State) => void) => void;
+  getList: (values?: Record<string, any>) => Promise<void>;
+};
+
+export const initialState: State = {
+  filterForm: {}, // 过滤器表单
+  modalVisible: false, // 新增编辑弹窗
+  modalType: "",
+  selectedRowKeys: [],
+  modalData: {},
+  // 表格列表
+  dataSource: {
+    success: false,
+    error: false,
+    done: true,
+    data: [],
+  },
+  // 分页
+  pagination: {
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  },
+};
+
+export const use{{firstUpperName}}Store = create<State & Action>()(
+  immer((set, get) => ({
+    ...initialState,
+    onCreate: () => {
+      set({ modalVisible: true, modalType: "create", modalData: {} });
+    },
+    reset: () => {
+      set({
+        filterForm: {},
+        pagination: { current: 1, pageSize: 10, total: 0 },
+      });
+    },
+    setState: (cb: (state: State) => void) => {
+      set(cb);
+    },
+    getList: async () => {
+      const { pagination, filterForm } = get();
+
+      set((state) => {
+        state.dataSource = {
+          data: state.dataSource.data,
+          success: false,
+          error: false,
+          done: false,
+        };
+      });
+      query({
+        pageSize: pagination.pageSize,
+        pageNum: pagination.current,
+        ...filterForm,
+      })
+        .then((res: any) => {
+          set((state) => {
+            state.dataSource = {
+              data: res.data,
+              success: true,
+              error: false,
+              done: true,
+            };
+            state.pagination = {
+              current: res.pageId,
+              pageSize: res.pageSize,
+              total: res.totalCount,
+            };
+          });
+        })
+        .catch((error: any) => {
+          set((state) => {
+            state.dataSource = {
+              data: [],
+              success: false,
+              error: true,
+              done: true,
+            };
+          });
+          error?.message &&
+            notification.error({
+              message: error?.message,
+            });
+        });
+    },
+  }))
+);
+
+export const {{firstUpperName}}Selectors = createSelectors(use{{firstUpperName}}Store);
+
+export const set{{firstUpperName}}State = {{firstUpperName}}Selectors.use.setState;

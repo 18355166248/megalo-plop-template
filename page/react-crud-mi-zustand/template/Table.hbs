@@ -1,0 +1,104 @@
+import { Button } from "antd";
+import { ActionList, TableLayout } from "@xmly/mi-design";
+import { ColumnsType } from "antd/lib/table";
+import { use{{firstUpperName}}Store } from "./{{name}}.store";
+import { useShallow } from "zustand/react/shallow";
+import { useEffect } from "react";
+
+const TableView = () => {
+  const { dataSource, pagination, setState, filterForm, getList } =
+    use{{firstUpperName}}Store(
+      useShallow((state) => ({
+        dataSource: state.dataSource,
+        pagination: state.pagination,
+        setState: state.setState,
+        filterForm: state.filterForm,
+        getList: state.getList,
+      }))
+    );
+
+  // 监听筛选项和分页的改变
+  useEffect(() => {
+    getList();
+  }, [filterForm, pagination.current, pagination.pageSize, getList]);
+
+  const columns: ColumnsType<any> = [
+    {
+      title: "表头1",
+      dataIndex: "cell1",
+      key: "cell1",
+    },
+    {
+      title: "表头2",
+      dataIndex: "cell2",
+      key: "cell2",
+    },
+    {
+      title: "操作",
+      width: 100,
+      render: (record: any) => (
+        <>
+          <ActionList
+            columns={[
+              {
+                text: "编辑",
+                type: "text",
+                onClick: () => {
+                  setState((state) => {
+                    state.modalType = "edit";
+                    state.modalData = record;
+                    state.modalVisible = true;
+                  });
+                },
+              },
+              {
+                text: "详情",
+                type: "text",
+                onClick: () => {
+                  setState((state) => {
+                    state.modalType = "detail";
+                    state.modalData = record;
+                    state.modalVisible = true;
+                  });
+                },
+              },
+            ]}
+          />
+        </>
+      ),
+    },
+  ];
+
+  function onTableChange(params: any) {
+    setState((state) => {
+      state.pagination = params;
+    });
+  }
+
+  function onCreate() {
+    setState((state) => {
+      state.modalType = "add";
+      state.modalVisible = true;
+    });
+  }
+
+  return (
+    <div className="mx-6">
+      <div className="mb-2">
+        <Button type="primary" onClick={onCreate}>
+          新增
+        </Button>
+      </div>
+      <TableLayout
+        rowKey="id"
+        dataSource={dataSource.data}
+        loading={!dataSource.done}
+        columns={columns}
+        pagination={pagination}
+        onChange={onTableChange}
+      />
+    </div>
+  );
+};
+
+export default TableView;
